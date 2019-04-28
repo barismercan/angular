@@ -1,11 +1,25 @@
+<!--ngIf eğer products boş ise yani componentin içinde data yoksa noProduct ı çalıştır deriz.
+  o da aslında # ile işaretlediğimiz alttaki ng-template kısmını çalıştırır.-->
 <h3 *ngIf="products; else noProduct">{{title}}</h3>
-<ng-template #noProduct>
+  <div class="form-group">
+    <input 
+      class="form-control" 
+      id="exampleInputEmail1" 
+      placeholder="Arama ifadesini giriniz"
+      [(ngModel)]="filterText">
+      <!--aşağıdaki ngIf aslında textbox altında birşey arandığında .. aradınız gösteriyor. biz böylece boşken o 
+        yazı görünmesin dedik.boş değilse filterText e ne yazılmışsa onu gösterecek haliyle-->
+    <small *ngIf="filterText" class="form-text text-muted">Şu an <strong>{{filterText}}</strong> aradınız.</small>
+  </div>
+
+  <ng-template #noProduct>
     <div class="alert alert-info" role="alert">
         Bu kategoride ürün yoktur!
       </div>
   </ng-template>
+
 <div class="row">
-    <div *ngFor="let product of products"  class="card" style="width: 18rem;">
+    <div *ngFor="let product of products | productFilter:filterText"  class="card" style="width: 18rem;">
         <img [src]="product.imageUrl" class="card-img-top" alt="...">
         <div class="card-body">
           <h5 class="card-title">{{product.name | uppercase}} {{product.price | currency}}</h5>
