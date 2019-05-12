@@ -8,6 +8,8 @@ import { CategoryComponent } from './category/category.component';
 import { ProductComponent } from './product/product.component';
 import { NavComponent } from './nav/nav.component';
 import { ProductFilterPipe } from './product/product-filter.pipe';
+import { AlertifyService } from './services/alertify.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -20,9 +22,11 @@ import { ProductFilterPipe } from './product/product-filter.pipe';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
-  providers: [],
+  //Alertify service global olduğu için buraya ekledik
+  providers: [AlertifyService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
