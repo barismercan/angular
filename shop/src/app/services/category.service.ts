@@ -1,18 +1,18 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Product } from '../product/product';
-import { Observable,throwError } from 'rxjs'; 
-import { tap,catchError } from 'rxjs/operators';
+import { Category } from '../category/category';
+import { Observable, throwError } from 'rxjs';
+import { tap, catchError } from 'rxjs/operators';
 
 @Injectable()
-export class ProductService {
+export class CategoryService {
 
-  path = "http://localhost:3000/products"
+  path = "http://localhost:3000/categories"
   constructor( private httpClientService: HttpClient) { }
 //Observable ile aslında yazdığımız serviste  get işlemini yaptık
 // ve subscribe kısmını yine componentin içinde yapmış olacağız.
-  getProducts():Observable<Product[]>{
-    return this.httpClientService.get<Product[]>(this.path).pipe(
+  getCategories():Observable<Category[]>{
+    return this.httpClientService.get<Category[]>(this.path).pipe(
       tap(data=>console.log(JSON.stringify(data))),
       catchError(this.handleError)
     );
@@ -26,4 +26,5 @@ export class ProductService {
     }
     return throwError(errorMessage);
   }
+
 }
