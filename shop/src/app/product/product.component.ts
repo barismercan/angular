@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Product } from './product';
 import { AlertifyService } from '../services/alertify.service';
-import { HttpClient } from '@angular/common/http';
+import { ProductService } from '../services/product.service';
+
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
@@ -9,18 +10,20 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ProductComponent implements OnInit {
 
-  constructor(private alertifyService: AlertifyService, private httpClientService: HttpClient) {
+  constructor(private alertifyService: AlertifyService,private productService:ProductService) {
 
   }
 
   title = "Ürün Listesi"
   filterText = ""
   products: Product[]
-  path = "http://localhost:3000/products"
+  
   ngOnInit() {
     //artık burada data backendden geliyormuş gibi çekiyoruz. gelen datayıda this products a attık.
-    this.httpClientService.get<Product[]>(this.path).subscribe(data => {
-      this.products = data
+    //alttaki durumu bir önceki committe bu sayfada http client ı alarak yapmıştık. ama mimari olarak
+    //her componentin datası kendi adına oluşturduğumuz serviceten buraya bağlanması daha sağlıklı
+    this.productService.getProducts().subscribe(data=>{
+      this.products=data
     });
   }
   addToCart(product) {
